@@ -403,9 +403,9 @@ int main () {
 
     cout<<"Enter the directory of the BibtexFileCSV file: (like C:\\Users\\Raja\\Downloads\\BibtexFileCSV.csv)\n\n";
 
-    //cin>>fileName;
+    cin>>fileName;
 
-    fileName = "C:\\Users\\Raja\\Downloads\\BibtexFileCSV.csv";
+    //fileName = "C:\\Users\\Raja\\Downloads\\BibtexFileCSV.csv";
 
     ifstream myfile (fileName);
 
