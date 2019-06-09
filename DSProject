@@ -6,7 +6,6 @@
 #include <string>
 #include <stdio.h>
 
-
 using namespace std;
 
 //to create the linked list with single string of data
@@ -78,6 +77,23 @@ bool searching(string x)
     return false;
 }
 
+int searchingTwo(string x)
+{
+    int number = 1;
+
+    node* current = new node();
+
+    current = first;
+
+    while (current != NULL)
+    {
+        if (current->data == x)
+            return number;
+        current = current->next;
+        ++number;
+    }
+}
+
 //printer function to test the run
 void printer () {
 
@@ -95,72 +111,186 @@ void printer () {
 //end of linkedList class with single strings
 };
 
-//start of linkedListTwo class with double strings
-/*
-class nodetwo{ 
+//start of linkedListTwo class with double integers
+
+class nodetwo{
 public:
-    string data1[2];
+    int data1[2];
     nodetwo *next;
 };
 
 class linkedListTwo{
 public:
-    nodetwo *head ,*tail;
-    linkedListTwo()
-    {
-      head=NULL;
-      tail=NULL;
-    }
-    
-    void NewNode(string value1, string value2){
+    nodetwo *head = NULL;
+    nodetwo *tail = NULL;
+
+    void NewNode(int value1, int value2){
+
         nodetwo *temp = new nodetwo();
         temp->data1[0] = value1;
         temp->data1[1] = value2;
         temp->next=NULL;
         if (head == NULL){
             head = temp;
-            temp = NULL;
+            tail = temp;
         }
         else
-      { 
+      {
         tail->next=temp;
-        tail=temp;
+        tail=tail->next;
       }
     }
-    
-    
-    int counter(){
-        int count = 0;
-        nodetwo *current=new nodetwo;
-        current = head;
+
+
+int counter(){
+    int count = 0;
+    nodetwo *current=new nodetwo;
+    current = head;
+
+    while(current!=NULL){
+        count++;
+        current = current->next;
+    }
+
+    return count;
+}
+
+void Print(){
+
+    nodetwo *current = new nodetwo();
+
+    current = head;
+
         while(current!=NULL){
-            count++;
+            cout<<current->data1[0]<<" co-authors in publication of the year of ";
+            if(current->data1[1]!=0)cout<<current->data1[1]<<endl;
+            else cout<<"<unknown>"<<endl;
             current = current->next;
         }
-        return count;
+        cout<<"\n";
     }
-    
 
-    void insert_At_Front(string value1, string value2)
-  {
-    nodetwo *temp=new nodetwo;
-    temp->data1[0]=value1;
-    temp->data1[1]=value2;
-    temp->next=head;
-    head=temp;
-  }    
-    
-    void Print(){
-        nodetwo *current = new nodetwo();
-        current = head;
-            while(current!=NULL){
-                cout<<current->data1[0]<<"  ";
-                cout<<current->data1[1]<<"  ";
-                current = current->next;
+void PrintforPublicationsPerYear(){
+
+    nodetwo *current = new nodetwo();
+
+    current = head;
+
+        while(current!=NULL){
+            cout<<current->data1[0]<<" publications published in the year of ";
+            if(current->data1[1]!=0)cout<<current->data1[1]<<endl;
+            else cout<<"<unknown>"<<endl;
+            current = current->next;
+        }
+        cout<<"\n";
+}
+
+void PrintforPosition(){
+
+    nodetwo *current = new nodetwo();
+
+    current = head;
+
+        while(current!=NULL){
+            cout<<current->data1[0]<<" publications in the position of ";
+            cout<<current->data1[1]<<endl;
+            current = current->next;
+        }
+
+        cout<<"\n";
+}
+
+void sorting () {
+
+    nodetwo * temphead = head;
+    nodetwo * tempnode = NULL;
+
+    for (nodetwo *index = head; index->next != nullptr; index = index->next) {
+        for (nodetwo *selection = index->next; selection != nullptr; selection = selection->next) {
+            if (index->data1[1] > selection->data1[1]) {
+                swap(index->data1, selection->data1);
             }
-            cout<<"\n";
+        }
     }
-};*/
+}
+
+//to get the boolean result of search
+bool searchingInt(int x)
+{
+    nodetwo* current = new nodetwo();
+    current = head;
+
+    while (current != NULL)
+    {
+        if (current->data1[1] == x)
+            return true;
+        current = current->next;
+    }
+    return false;
+}
+
+};
+
+class nodethree{
+public:
+    string sdata;
+    int idata;
+    nodethree *next;
+};
+
+class linkedListThree{
+public:
+    nodethree *head = NULL;
+    nodethree *tail = NULL;
+
+void NewNode(string value1, int value2){
+
+    nodethree *temp = new nodethree();
+    temp->sdata = value1;
+    temp->idata = value2;
+    temp->next=NULL;
+    if (head == NULL){
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        tail->next=temp;
+        tail=tail->next;
+    }
+}
+
+void Print(){
+
+    nodethree *current = new nodethree();
+
+    current = head;
+
+    while(current!=NULL){
+        cout<<current->sdata<<" in the year of ";
+        if(current->idata!=0)cout<<current->idata<<endl;
+        else cout<<"<unknown>"<<endl;
+        current = current->next;
+    }
+
+    cout<<"\n";
+}
+
+void sorting () {
+
+    nodethree * temphead = head;
+    nodethree * tempnode = NULL;
+
+    for (nodethree *index = head; index->next != nullptr; index = index->next) {
+        for (nodethree *selection = index->next; selection != nullptr; selection = selection->next) {
+            if (index->idata > selection->idata) {
+                swap(index->idata, selection->idata);
+            }
+        }
+    }
+}
+
+};
 
 //creation of author class
 class Author{
@@ -170,24 +300,78 @@ Author(){}
 
 string name;
 
-linkedList* publishYear = new linkedList();
+linkedListTwo* coauthorsAndYears = new linkedListTwo();
 
-linkedList* journalName = new linkedList();
+linkedListTwo* publicationsPerYearByX = new linkedListTwo();
 
-linkedList* numberOfArticles = new linkedList();
+linkedListTwo* paperByPosition = new linkedListTwo();
 
-int countTotalArticles = 0, countArticlesByYear[2], numberOfCoauthors[2], yearsOfArticlesInIntegers;
+linkedListThree* journalNameAndYear = new linkedListThree();
+
+int countTotalArticles = 0;
 
 string total[2];
 
-/*int convertYearsToIntegers(string yearsOfArticles){
+void enter(int x, int y){
 
-if (yearsOfArticles.size() > 6)   {
-    string part1, part2;
+coauthorsAndYears->NewNode(x,y);
 
 }
+
+void enterTwo(int y){
+
+    nodetwo* current = new nodetwo();
+
+    int x = 1;
+
+    if ((publicationsPerYearByX->searchingInt(y)) ==  false) {
+
+        publicationsPerYearByX->NewNode(x, y);
+
+    } else {
+
+    current = publicationsPerYearByX->head;
+
+    while (current != NULL)
+    {
+        if (current->data1[1] == y)
+            current->data1[0] = current->data1[0]+1;
+        current = current->next;
+    }
 }
-*/
+
+}
+
+void enterThree (int pos) {
+
+    nodetwo* current = new nodetwo();
+
+    int x = 1;
+
+    if ((paperByPosition->searchingInt(pos)) ==  false) {
+
+        paperByPosition->NewNode(x, pos);
+
+    } else {
+
+    current = paperByPosition->head;
+
+        while (current != NULL)
+        {
+            if (current->data1[1] == pos){
+                current->data1[0] = current->data1[0]+1;
+            }
+            current = current->next;
+        }
+    }
+
+}
+
+void enterFour (string s, int y)    {
+
+    journalNameAndYear->NewNode(s,y);
+
+}
 
 };
 
@@ -395,6 +579,103 @@ linkedList* getAllAuthors (Article *a)  {
     return l;
 }
 
+int convertToInteger(string s){
+
+if (s.size()==4){return (std::stoi(s));}
+else if (s=="NULL" || s==""){return 0;}
+else if (s.size()>4){
+    while (s.size()>4){
+        s.pop_back();
+    }
+    return (std::stoi(s));
+}
+else return 0;
+
+}
+
+void publicationsPerYear(Author* a, int totalNumber){
+
+    cout<<"Enter the name of the author without any spaces and commas (such as Guizani Mohsen):"<<endl;
+
+    std::string st;
+
+    cin.ignore();
+
+    std::getline(std::cin, st);
+
+    for(int x = 0; x<totalNumber; ++x){
+
+        if (a[x].name == st){
+
+            a[x].coauthorsAndYears->sorting();
+            a[x].coauthorsAndYears->Print();
+
+        }
+    }
+}
+
+void actualPublicationsPerYear(Author* a, int totalNumber){
+
+    cout<<"Enter the name of the author without any spaces and commas (such as Guizani Mohsen):"<<endl;
+
+    std::string st;
+
+    cin.ignore();
+
+    std::getline(std::cin, st);
+
+    for(int x = 0; x<totalNumber; ++x){
+
+        if (a[x].name == st){
+
+            a[x].publicationsPerYearByX->sorting();
+            a[x].publicationsPerYearByX->PrintforPublicationsPerYear();
+
+        }
+    }
+}
+
+void positionOfPublications(Author* a, int totalNumber){
+
+    cout<<"Enter the name of the author without any spaces and commas (such as Guizani Mohsen):"<<endl;
+
+    std::string st;
+
+    cin.ignore();
+
+    std::getline(std::cin, st);
+
+    for(int x = 0; x<totalNumber; ++x){
+
+        if (a[x].name == st){
+
+            a[x].paperByPosition->sorting();
+            a[x].paperByPosition->PrintforPosition();
+
+        }
+    }
+}
+
+void journalOfAuthor(Author* a, int totalNumber){
+
+    cout<<"Enter the name of the author without any spaces and commas (such as Guizani Mohsen):"<<endl;
+
+    std::string st;
+
+    cin.ignore();
+
+    std::getline(std::cin, st);
+
+    for(int x = 0; x<totalNumber; ++x){
+
+        if (a[x].name == st){
+
+            a[x].journalNameAndYear->sorting();
+            a[x].journalNameAndYear->Print();
+        }
+    }
+}
+
 int main () {
 
     linkedList* l = new linkedList();
@@ -403,9 +684,9 @@ int main () {
 
     cout<<"Enter the directory of the BibtexFileCSV file: (like C:\\Users\\Raja\\Downloads\\BibtexFileCSV.csv)\n\n";
 
-    cin>>fileName;
+    //cin>>fileName;
 
-    //fileName = "C:\\Users\\Raja\\Downloads\\BibtexFileCSV.csv";
+    fileName = "C:\\Users\\Raja\\Downloads\\BibtexFileCSV.csv";
 
     ifstream myfile (fileName);
 
@@ -522,20 +803,29 @@ int main () {
 
     int anotherCounter = 0;
 
+    int position;
+
     while (authorListTwo != NULL){
 
         auth[anotherCounter].name = authorListTwo->data;
-
         for(int xyz = 0; xyz<50; ++xyz){
 
             if (article[xyz].authorList->searching(authorListTwo->data))
             {
                 ++auth[anotherCounter].countTotalArticles;
+
+                auth[anotherCounter].enter(article[xyz].authorList->countNodes()-1,convertToInteger(article[xyz].year));
+
+                auth[anotherCounter].enterTwo(convertToInteger(article[xyz].year));
+
+                position = article[xyz].authorList->searchingTwo(authorListTwo->data);
+
+                auth[anotherCounter].enterThree(position);
+
+                auth[anotherCounter].enterFour(article[xyz].publisher ,convertToInteger(article[xyz].year));
             }
         }
-
         ++anotherCounter;
-
         authorListTwo = authorListTwo->next;
     }
 
@@ -557,19 +847,19 @@ int main () {
 
     } else if (ch == 2) {
 
-        string s;
-
-        cout<<"Please enter a string: "<<endl;
-
-        cout<<s<<endl;
+        actualPublicationsPerYear(auth, totalAuthors);
 
     } else if (ch == 3) {
 
+        publicationsPerYear(auth, totalAuthors);
 
     } else if (ch == 4) {
 
+        positionOfPublications(auth, totalAuthors);
 
     } else if (ch == 5) {
+
+        journalOfAuthor(auth, totalAuthors);
 
     } else if (ch == 6) {
 
